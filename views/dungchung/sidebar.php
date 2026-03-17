@@ -24,30 +24,6 @@ $currentPage = $_GET['page'] ?? 'dashboard';
             </li>
             <?php endif; ?>
 
-            <?php if (hasPermission('thietbi.view')): ?>
-            <li class="relative px-6 py-3">
-                <?php if ($currentPage == 'thietbi'): ?>
-                    <span class="absolute inset-y-0 left-0 w-1 bg-blue-600 rounded-tr-lg rounded-br-lg" aria-hidden="true"></span>
-                <?php endif; ?>
-                <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 <?php echo $currentPage == 'thietbi' ? 'text-gray-800 dark:text-gray-100' : '' ?>" href="index.php?page=thietbi">
-                    <i class="fas fa-door-open w-5 h-5 flex items-center justify-center"></i>
-                    <span class="ml-4">Phòng & Thiết bị</span>
-                </a>
-            </li>
-            <?php endif; ?>
-
-            <?php if (hasPermission('tudong.view')): ?>
-            <li class="relative px-6 py-3">
-                <?php if ($currentPage == 'tudong'): ?>
-                    <span class="absolute inset-y-0 left-0 w-1 bg-blue-600 rounded-tr-lg rounded-br-lg" aria-hidden="true"></span>
-                <?php endif; ?>
-                <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 <?php echo $currentPage == 'tudong' ? 'text-gray-800 dark:text-gray-100' : '' ?>" href="index.php?page=tudong">
-                    <i class="fas fa-magic w-5 h-5 flex items-center justify-center"></i>
-                    <span class="ml-4">Kịch bản tự động</span>
-                </a>
-            </li>
-            <?php endif; ?>
-
             <?php if (hasPermission('phantich.view')): ?>
             <li class="relative px-6 py-3">
                 <?php if ($currentPage == 'phantich'): ?>
@@ -55,7 +31,7 @@ $currentPage = $_GET['page'] ?? 'dashboard';
                 <?php endif; ?>
                 <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 <?php echo $currentPage == 'phantich' ? 'text-gray-800 dark:text-gray-100' : '' ?>" href="index.php?page=phantich">
                     <i class="fas fa-chart-line w-5 h-5 flex items-center justify-center"></i>
-                    <span class="ml-4">Phân tích dữ liệu</span>
+                    <span class="ml-4">Phân tích và Báo cáo</span>
                 </a>
             </li>
             <?php endif; ?>
@@ -67,7 +43,31 @@ $currentPage = $_GET['page'] ?? 'dashboard';
                 <?php endif; ?>
                 <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 <?php echo $currentPage == 'alert_log' ? 'text-gray-800 dark:text-gray-100' : '' ?>" href="index.php?page=alert_log">
                     <i class="fas fa-history w-5 h-5 flex items-center justify-center"></i>
-                    <span class="ml-4">Nhật ký & Cảnh báo</span>
+                    <span class="ml-4">Nhật ký và Cảnh báo</span>
+                </a>
+            </li>
+            <?php endif; ?>
+
+            <?php if (hasPermission('tudong.view')): ?>
+            <li class="relative px-6 py-3">
+                <?php if ($currentPage == 'tudong'): ?>
+                    <span class="absolute inset-y-0 left-0 w-1 bg-blue-600 rounded-tr-lg rounded-br-lg" aria-hidden="true"></span>
+                <?php endif; ?>
+                <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 <?php echo $currentPage == 'tudong' ? 'text-gray-800 dark:text-gray-100' : '' ?>" href="index.php?page=tudong">
+                    <i class="fas fa-magic w-5 h-5 flex items-center justify-center"></i>
+                    <span class="ml-4">Cấu hình và Kịch bản</span>
+                </a>
+            </li>
+            <?php endif; ?>
+
+            <?php if (hasPermission('thietbi.view')): ?>
+            <li class="relative px-6 py-3">
+                <?php if ($currentPage == 'thietbi'): ?>
+                    <span class="absolute inset-y-0 left-0 w-1 bg-blue-600 rounded-tr-lg rounded-br-lg" aria-hidden="true"></span>
+                <?php endif; ?>
+                <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 <?php echo $currentPage == 'thietbi' ? 'text-gray-800 dark:text-gray-100' : '' ?>" href="index.php?page=thietbi">
+                    <i class="fas fa-door-open w-5 h-5 flex items-center justify-center"></i>
+                    <span class="ml-4">Phòng và Thiết bị</span>
                 </a>
             </li>
             <?php endif; ?>
@@ -79,7 +79,7 @@ $currentPage = $_GET['page'] ?? 'dashboard';
                 <?php endif; ?>
                 <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 <?php echo $currentPage == 'users' ? 'text-gray-800 dark:text-gray-100' : '' ?>" href="index.php?page=users">
                     <i class="fas fa-user-shield w-5 h-5 flex items-center justify-center"></i>
-                    <span class="ml-4">Hệ thống người dùng</span>
+                    <span class="ml-4">Người dùng và Phân quyền</span>
                 </a>
             </li>
             <?php endif; ?>
@@ -129,30 +129,6 @@ $currentPage = $_GET['page'] ?? 'dashboard';
             </li>
             <?php endif; ?>
 
-            <?php if (hasPermission('thietbi.view')): ?>
-            <li class="relative px-6 py-3">
-                <?php if ($currentPage == 'thietbi'): ?>
-                    <span class="absolute inset-y-0 left-0 w-1 bg-blue-600 rounded-tr-lg rounded-br-lg" aria-hidden="true"></span>
-                <?php endif; ?>
-                <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 <?php echo $currentPage == 'thietbi' ? 'text-gray-800 dark:text-gray-100' : '' ?>" href="index.php?page=thietbi">
-                    <i class="fas fa-door-open w-5 h-5 flex items-center justify-center"></i>
-                    <span class="ml-4">Phòng & Thiết bị</span>
-                </a>
-            </li>
-            <?php endif; ?>
-
-            <?php if (hasPermission('tudong.view')): ?>
-            <li class="relative px-6 py-3">
-                <?php if ($currentPage == 'tudong'): ?>
-                    <span class="absolute inset-y-0 left-0 w-1 bg-blue-600 rounded-tr-lg rounded-br-lg" aria-hidden="true"></span>
-                <?php endif; ?>
-                <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 <?php echo $currentPage == 'tudong' ? 'text-gray-800 dark:text-gray-100' : '' ?>" href="index.php?page=tudong">
-                    <i class="fas fa-magic w-5 h-5 flex items-center justify-center"></i>
-                    <span class="ml-4">Kịch bản tự động</span>
-                </a>
-            </li>
-            <?php endif; ?>
-
             <?php if (hasPermission('phantich.view')): ?>
             <li class="relative px-6 py-3">
                 <?php if ($currentPage == 'phantich'): ?>
@@ -160,7 +136,7 @@ $currentPage = $_GET['page'] ?? 'dashboard';
                 <?php endif; ?>
                 <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 <?php echo $currentPage == 'phantich' ? 'text-gray-800 dark:text-gray-100' : '' ?>" href="index.php?page=phantich">
                     <i class="fas fa-chart-line w-5 h-5 flex items-center justify-center"></i>
-                    <span class="ml-4">Phân tích dữ liệu</span>
+                    <span class="ml-4">Phân tích và Báo cáo</span>
                 </a>
             </li>
             <?php endif; ?>
@@ -172,7 +148,31 @@ $currentPage = $_GET['page'] ?? 'dashboard';
                 <?php endif; ?>
                 <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 <?php echo $currentPage == 'alert_log' ? 'text-gray-800 dark:text-gray-100' : '' ?>" href="index.php?page=alert_log">
                     <i class="fas fa-history w-5 h-5 flex items-center justify-center"></i>
-                    <span class="ml-4">Nhật ký & Cảnh báo</span>
+                    <span class="ml-4">Nhật ký và Cảnh báo</span>
+                </a>
+            </li>
+            <?php endif; ?>
+
+            <?php if (hasPermission('tudong.view')): ?>
+            <li class="relative px-6 py-3">
+                <?php if ($currentPage == 'tudong'): ?>
+                    <span class="absolute inset-y-0 left-0 w-1 bg-blue-600 rounded-tr-lg rounded-br-lg" aria-hidden="true"></span>
+                <?php endif; ?>
+                <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 <?php echo $currentPage == 'tudong' ? 'text-gray-800 dark:text-gray-100' : '' ?>" href="index.php?page=tudong">
+                    <i class="fas fa-magic w-5 h-5 flex items-center justify-center"></i>
+                    <span class="ml-4">Cấu hình và Kịch bản</span>
+                </a>
+            </li>
+            <?php endif; ?>
+
+            <?php if (hasPermission('thietbi.view')): ?>
+            <li class="relative px-6 py-3">
+                <?php if ($currentPage == 'thietbi'): ?>
+                    <span class="absolute inset-y-0 left-0 w-1 bg-blue-600 rounded-tr-lg rounded-br-lg" aria-hidden="true"></span>
+                <?php endif; ?>
+                <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 <?php echo $currentPage == 'thietbi' ? 'text-gray-800 dark:text-gray-100' : '' ?>" href="index.php?page=thietbi">
+                    <i class="fas fa-door-open w-5 h-5 flex items-center justify-center"></i>
+                    <span class="ml-4">Phòng và Thiết bị</span>
                 </a>
             </li>
             <?php endif; ?>
@@ -184,7 +184,7 @@ $currentPage = $_GET['page'] ?? 'dashboard';
                 <?php endif; ?>
                 <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 <?php echo $currentPage == 'users' ? 'text-gray-800 dark:text-gray-100' : '' ?>" href="index.php?page=users">
                     <i class="fas fa-user-shield w-5 h-5 flex items-center justify-center"></i>
-                    <span class="ml-4">Hệ thống người dùng</span>
+                    <span class="ml-4">Người dùng và Phân quyền</span>
                 </a>
             </li>
             <?php endif; ?>
