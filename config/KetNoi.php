@@ -12,7 +12,7 @@ class KetNoi {
         $this->host = getenv('DB_HOST') ?: '127.0.0.1';
         $this->user = getenv('DB_USER') ?: 'root';
         $this->pass = getenv('DB_PASS') ?: '';
-        $this->dbname = getenv('DB_NAME') ?: 'qlnt';
+        $this->dbname = getenv('DB_NAME') ?: 'QLNT';
         $this->port = getenv('DB_PORT') ?: 3306;
         $this->moKetNoi();
     }
