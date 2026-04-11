@@ -1,20 +1,21 @@
-FROM php:8.1-apache
+FROM php:8.1-fpm
 
 RUN apt-get update && apt-get install -y \
+    nginx \
+    supervisor \
     libzip-dev \
     zip \
+    libmariadb-dev \
     && docker-php-ext-install mysqli pdo pdo_mysql zip
 
-RUN a2enmod rewrite
-
-COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+COPY . /var/www/html
+COPY ./nginx.conf /etc/nginx/sites-available/default
+COPY ./supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
 WORKDIR /var/www/html
 
-COPY . .
-
-RUN sed -i 's!/var/www/html!/var/www/html/public!g' /etc/apache2/sites-available/000-default.conf
-
-RUN composer install --no-dev --optimize-autoloader
-
 RUN chown -R www-data:www-data /var/www/html
+
+EXPOSE 80
+
+CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
