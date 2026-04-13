@@ -129,7 +129,7 @@
                                             </span>
                                         </td>
                                         <td class="px-4 py-3 text-xs">
-                                            <span class="px-2 py-1 font-medium leading-tight text-blue-700 bg-blue-100 rounded-full dark:bg-blue-700 dark:text-blue-100 inline-block">
+                                            <span class="px-2 py-1 font-medium leading-tight text-gray-700 bg-gray-100 rounded-full dark:bg-gray-700 dark:text-gray-100 inline-block">
                                                 <?= count($user->permissions) ?> quyền
                                             </span>
                                         </td>
@@ -152,9 +152,9 @@
                                                 <button @click="openModal" 
                                                         onclick="triggerModal({
                                                             title: 'Xóa người dùng',
-                                                            description: 'Hành động này không thể hoàn tác!',
+                                                            description: 'Bạn đang xoá người dùng <?= $user->hoTen ?>. Hành động này không thể hoàn tác!',
                                                             confirmUrl: 'index.php?page=users_xuly_xoa&id=<?= $user->idNguoiDung ?>',
-                                                            btnClass: 'bg-blue-600 hover:bg-blue-700'
+                                                            btnClass: 'bg-red-600 hover:bg-red-700'
                                                         })"
                                                         class="text-gray-400 hover:text-red-600 p-1">
                                                     <i class="fas fa-trash"></i>
@@ -220,7 +220,7 @@
                                                 <button type="button" 
                                                         @click="isDeleteGroupModalOpen = true" 
                                                         onclick="openDeleteGroupModal('<?= $nhom->idNhom ?>', '<?= htmlspecialchars($nhom->maNhom) ?>')"
-                                                        class="text-gray-400 hover:text-blue-600 transition-colors duration-150"
+                                                        class="text-gray-400 hover:text-red-600 transition-colors duration-150"
                                                         title="Xóa nhóm">
                                                     <i class="fas fa-trash"></i>
                                                 </button>
@@ -285,7 +285,7 @@
                                                         title: 'Xóa quyền',
                                                         description: 'Bạn đang xóa quyền <?= $quyen->tenQuyen ?>. Hành động này không thể hoàn tác!',
                                                         confirmUrl: 'index.php?page=xuly_quyen_xoa&id=<?= $quyen->idQuyen ?>',
-                                                        btnClass: 'bg-blue-600 hover:bg-blue-700'
+                                                        btnClass: 'bg-red-600 hover:bg-red-700'
                                                     })"
                                                     class="text-gray-400 hover:text-blue-600 transition-colors duration-150">
                                                 <i class="fas fa-trash"></i>
@@ -330,7 +330,7 @@
                 Xác nhận xóa nhóm: <span id="delete-group-display-name" class="text-blue-600"></span>
             </p>
             <div class="text-sm text-gray-700 dark:text-gray-400 space-y-3">
-                <div class="p-3 bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-400 rounded-lg border border-blue-100 dark:border-blue-800">
+                <div class="p-3 bg-amber-50 dark:bg-amber-900/20 text-amber-700 dark:text-amber-400 rounded-lg border border-amber-100 dark:border-amber-800">
                     <i class="fas fa-exclamation-triangle mr-2"></i>
                     <b>Cảnh báo:</b> Hành động này sẽ xóa toàn bộ thành viên trong nhóm. Di chuyển người dùng sang nhóm mới (nếu có) để xóa an toàn.
                 </div>
@@ -354,7 +354,7 @@
                 Hủy bỏ
             </button>
             <button onclick="executeDeleteGroup()" 
-                    class="w-full px-5 py-3 text-sm text-center text-white bg-blue-600 rounded-lg sm:w-auto hover:bg-blue-700 shadow-lg">
+                    class="w-full px-5 py-3 text-sm text-center text-white bg-red-600 rounded-lg sm:w-auto hover:bg-red-700 shadow-lg">
                 Xác nhận xóa vĩnh viễn
             </button>
         </footer>
@@ -468,8 +468,9 @@
         border-bottom: 2px solid transparent;
     }
     [data-bs-toggle="tab"].active {
-        color: #2563eb;
-        border-bottom-color: #2563eb;
+        color: #2563eb; 
+        border-bottom: 3px solid #2563eb;
+        font-weight: 600;
     }
     .dark [data-bs-toggle="tab"].active {
         color: #60a5fa;

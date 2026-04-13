@@ -111,15 +111,31 @@ switch ($page) {
         }
         break;
 
-    // Phân tích và Tự động hóa
+    // Phân tích
     case 'phantich':
         if (hasPermission('phantich.view')) {
+            $ptController = new \App\Controllers\PhanTichController();
+            $danhSachThietBi = $ptController->hienThiTrangPhanTich();
             $viewFile = $viewDir . '/phantich/index.php';
         } else {
             $page = '403';
         }
         break;
 
+    case 'phantich_api_data':
+        if (hasPermission('phantich.view')) {
+            $ptController = new \App\Controllers\PhanTichController();
+            $ptController->apiLayDuLieuBieuDo();
+        }
+        break;
+    case 'api_lay_cam_bien':
+        if (hasPermission('phantich.view')) {
+            $ptController = new \App\Controllers\PhanTichController();
+            $ptController->apiLayDanhSachCamBien();
+        }
+        break;
+    
+    // tự động hoá
     case 'tudong':
         if (hasPermission('tudong.view')) {
             $viewFile = $viewDir . '/tudong/index.php';

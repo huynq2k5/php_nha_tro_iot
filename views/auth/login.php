@@ -14,7 +14,7 @@
                 </h1>
 
                 <?php if (isset($_SESSION['error'])): ?>
-                    <div class="flex items-center justify-between p-4 mb-4 text-sm font-semibold text-blue-700 bg-blue-100 rounded-lg dark:bg-blue-200 dark:text-blue-800" role="alert">
+                    <div class="flex items-center justify-between p-4 mb-4 text-sm font-semibold text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800" role="alert">
                         <div class="flex items-center">
                             <i class="fas fa-exclamation-circle mr-2"></i>
                             <span><?= $_SESSION['error']; ?></span>
