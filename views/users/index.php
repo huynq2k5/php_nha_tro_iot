@@ -9,7 +9,7 @@
         <!-- Dynamic Action Button -->
         <div id="dynamicActionButton">
             <a href="index.php?page=nguoidung_them" 
-               class="inline-flex items-center px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-blue-600 border border-transparent rounded-lg hover:bg-blue-700 focus:outline-none focus:shadow-outline-blue shadow-md">
+               class="inline-flex items-center px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-red-600 border border-transparent rounded-lg hover:bg-red-700 focus:outline-none focus:shadow-outline-red shadow-md">
                 <i class="fas fa-user-plus mr-2"></i>
                 Thêm người dùng mới
             </a>
@@ -54,120 +54,134 @@
         
         <!-- Tab 1: Danh sách nhân sự -->
         <div class="tab-pane fade show active" id="tab-users" role="tabpanel">
-            <div class="w-full overflow-hidden rounded-lg shadow-xs border border-gray-200 dark:border-gray-700">
-                <!-- Card Header với filter -->
-                <div class="px-4 py-3 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
-                    <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-                        <!-- Search box đẹp hơn -->
-                        <div class="relative flex-1 max-w-md">
-                            <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                                <i class="fas fa-search text-gray-400 dark:text-gray-500"></i>
-                            </div>
-                            <input type="text" 
-                                class="block w-full pl-10 pr-4 py-2.5 text-sm bg-gray-100 border-0 rounded-lg dark:bg-gray-700 dark:text-gray-300 placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-300 dark:focus:ring-blue-800 transition-all duration-150" 
-                                placeholder="Tìm kiếm theo tên, email..."
-                                style="min-width: 280px;">
-                        </div>
-                        
-                        <div class="flex gap-2">
-                            <!-- Select đẹp hơn -->
-                            <div class="relative">
-                                <select class="block w-full py-2.5 pl-4 pr-10 text-sm bg-gray-100 border-0 rounded-lg appearance-none dark:bg-gray-700 dark:text-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-300 dark:focus:ring-blue-800 transition-all duration-150 cursor-pointer">
-                                    <option value="">Tất cả vai trò</option>
-                                    <option value="admin">Admin</option>
-                                    <option value="staff">Staff</option>
-                                    <option value="viewer">Viewer</option>
-                                </select>
-                                <div class="absolute inset-y-0 right-0 flex items-center px-3 pointer-events-none">
-                                    <i class="fas fa-chevron-down text-xs text-gray-400 dark:text-gray-500"></i>
+            <div class="grid gap-6">
+                <div class="w-full overflow-hidden rounded-lg shadow-xs border border-gray-200 dark:border-gray-700">
+                    <div class="px-4 py-3 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
+                        <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                            <div class="relative flex-1 max-w-md">
+                                <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                                    <i class="fas fa-search text-gray-400 dark:text-gray-500"></i>
                                 </div>
+                                <input type="text" 
+                                    id="searchInput"
+                                    class="block w-full pl-10 pr-4 py-2 text-sm bg-gray-100 border-0 rounded-lg dark:bg-gray-700 dark:text-gray-300 placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-300 dark:focus:ring-blue-800 transition-all duration-150" 
+                                    placeholder="Tìm kiếm theo tên, username...">
                             </div>
                             
-                            <!-- Nút lọc đẹp hơn -->
-                            <button class="inline-flex items-center px-4 py-2.5 text-sm font-medium text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-300 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600 dark:focus:ring-blue-800 transition-all duration-150">
-                                <i class="fas fa-filter mr-2 text-blue-500"></i>
-                                <span>Lọc</span>
-                            </button>
+                            <div class="flex flex-wrap gap-2">
+                                <div class="relative">
+                                    <select id="filterRole" class="block w-full py-2 pl-4 pr-10 text-sm bg-gray-100 border-0 rounded-lg appearance-none dark:bg-gray-700 dark:text-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-300 dark:focus:ring-blue-800 transition-all duration-150 cursor-pointer">
+                                        <option value="">Tất cả vai trò</option>
+                                        <?php if (!empty($danhSachNhom)): ?>
+                                            <?php foreach ($danhSachNhom as $nhom): ?>
+                                                <option value="<?= $nhom->idNhom ?>">
+                                                    <?= $nhom->tenNhom ?>
+                                                </option>
+                                            <?php endforeach; ?>
+                                        <?php endif; ?>
+                                    </select>
+                                    <div class="absolute inset-y-0 right-0 flex items-center px-3 pointer-events-none">
+                                        <i class="fas fa-chevron-down text-xs text-gray-400 dark:text-gray-500"></i>
+                                    </div>
+                                </div>
+                                
+                                <button class="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-300 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600 dark:focus:ring-blue-800 transition-all duration-150">
+                                    <i class="fas fa-filter mr-2 text-blue-500"></i>
+                                    <span>Lọc</span>
+                                </button>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <!-- Table -->
-                <div class="w-full overflow-x-auto">
-                    <table class="w-full">
-                        <thead>
-                            <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
-                                <th class="px-4 py-3">Người dùng</th>
-                                <th class="px-4 py-3">Tên đăng nhập</th>
-                                <th class="px-4 py-3">Vai trò</th>
-                                <th class="px-4 py-3">Quyền hạn</th>
-                                <th class="px-4 py-3 text-right">Thao tác</th>
-                            </tr>
-                        </thead>
-                        <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
-                            <?php if (!empty($danhSachNguoiDung)): ?>
-                                <?php foreach ($danhSachNguoiDung as $user): ?>
-                                    <tr class="text-gray-700 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-150">
-                                        <td class="px-4 py-3">
-                                            <div class="flex items-center text-sm">
-                                                <div class="relative hidden w-8 h-8 mr-3 rounded-full md:block flex-shrink-0">
-                                                    <div class="flex items-center justify-center w-full h-full rounded-full bg-blue-100 text-blue-600 dark:bg-blue-900 dark:text-blue-200 font-bold">
-                                                        <?= strtoupper(substr($user->hoTen ?? 'U', 0, 1)) ?>
+                    <div class="w-full overflow-x-auto">
+                        <table class="w-full whitespace-no-wrap">
+                            <thead>
+                                <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
+                                    <th class="px-4 py-3">Người dùng</th>
+                                    <th class="px-4 py-3">Username</th>
+                                    <th class="px-4 py-3">Vai trò</th>
+                                    <th class="px-4 py-3">Quyền hạn</th>
+                                    <th class="px-4 py-3 text-right">Thao tác</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
+                                <?php if (!empty($danhSachNguoiDung)): ?>
+                                    <?php foreach ($danhSachNguoiDung as $user): ?>
+                                        <tr class="text-gray-700 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-150">
+                                            <td class="px-4 py-3">
+                                                <div class="flex items-center text-sm">
+                                                    <div class="relative hidden w-8 h-8 mr-3 rounded-full md:block flex-shrink-0">
+                                                        <div class="flex items-center justify-center w-full h-full rounded-full bg-red-100 text-red-600 dark:bg-red-900 dark:text-red-200 font-bold text-xs">
+                                                            <?= strtoupper(substr($user->hoTen ?? 'U', 0, 1)) ?>
+                                                        </div>
+                                                    </div>
+                                                    <div>
+                                                        <p class="font-semibold"><?= $user->hoTen ?></p>
+                                                        <p class="text-xs text-gray-600 dark:text-gray-400"><?= $user->maNguoiDung ?></p>
                                                     </div>
                                                 </div>
-                                                <div class="min-w-0">
-                                                    <p class="font-semibold break-words"><?= $user->maNguoiDung ?> - <?= $user->hoTen ?></p>
+                                            </td>
+                                            <td class="px-4 py-3 text-sm">
+                                                <code class="px-2 py-1 font-mono text-xs bg-gray-100 rounded dark:bg-gray-700 text-gray-600 dark:text-gray-300">
+                                                    <?= $user->tenDangNhap ?>
+                                                </code>
+                                            </td>
+                                            <td class="px-4 py-3 text-sm">
+                                                <span class="px-2 py-1 font-semibold leading-tight text-red-700 bg-red-100 rounded-full dark:bg-red-700 dark:text-red-100 text-xs">
+                                                    <?= $user->tenNhom ?>
+                                                </span>
+                                            </td>
+                                            <td class="px-4 py-3 text-xs">
+                                                <span class="px-2 py-1 font-medium leading-tight text-blue-700 bg-blue-50 border border-blue-100 rounded-full dark:bg-gray-700 dark:text-blue-400 dark:border-blue-900">
+                                                    <?= count($user->permissions) ?> quyền
+                                                </span>
+                                            </td>
+                                            <td class="px-4 py-3 text-sm text-right">
+                                                <div class="flex justify-end items-center space-x-1">
+                                                    
+                                                    <button @click="openModal" 
+                                                            onclick="triggerModal({
+                                                                title: 'Khôi phục mật khẩu',
+                                                                description: 'Bạn đang khôi phục mật khẩu của <?= $user->hoTen ?>.',
+                                                                confirmUrl: 'index.php?page=users_xuly_reset&id=<?= $user->idNguoiDung ?>',
+                                                                btnClass: 'bg-red-600 hover:bg-red-700'
+                                                            })"
+                                                            class="p-1.5 text-gray-400 hover:text-green-600 transition-colors duration-150 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700"
+                                                            title="Reset mật khẩu">
+                                                        <i class="fas fa-key w-4 h-4"></i>
+                                                    </button>
+
+                                                    <a href="index.php?page=nguoidung_sua&id=<?= $user->idNguoiDung ?>" 
+                                                    class="inline-flex p-1.5 text-gray-400 hover:text-blue-600 transition-colors duration-150 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700"
+                                                    title="Chỉnh sửa">
+                                                        <i class="fas fa-edit w-4 h-4"></i>
+                                                    </a>
+                                                    
+                                                    <button @click="openModal" 
+                                                            onclick="triggerModal({
+                                                                title: 'Xóa người dùng',
+                                                                description: 'Bạn đang xóa <?= $user->hoTen ?>. Hành động này không thể hoàn tác!',
+                                                                confirmUrl: 'index.php?page=users_xuly_xoa&id=<?= $user->idNguoiDung ?>',
+                                                                btnClass: 'bg-red-600 hover:bg-red-700'
+                                                            })"
+                                                            class="p-1.5 text-gray-400 hover:text-red-600 transition-colors duration-150 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700"
+                                                            title="Xóa người dùng">
+                                                        <i class="fas fa-trash w-4 h-4"></i>
+                                                    </button>
                                                 </div>
-                                            </div>
-                                        </td>
-                                        <td class="px-4 py-3 text-sm">
-                                            <?= $user->tenDangNhap ?>
-                                        </td>
-                                        <td class="px-4 py-3 text-center">
-                                            <span class="px-2 py-1 text-xs font-semibold leading-tight text-blue-700 dark:text-blue-100">
-                                                <?= $user->tenNhom ?>
-                                            </span>
-                                        </td>
-                                        <td class="px-4 py-3 text-xs">
-                                            <span class="px-2 py-1 font-medium leading-tight text-gray-700 bg-gray-100 rounded-full dark:bg-gray-700 dark:text-gray-100 inline-block">
-                                                <?= count($user->permissions) ?> quyền
-                                            </span>
-                                        </td>
-                                        <td class="px-4 py-3 text-sm text-right">
-                                            <div class="flex items-center justify-end space-x-2">
-                                                <button @click="openModal" 
-                                                        onclick="triggerModal({
-                                                            title: 'Khôi phục mật khẩu',
-                                                            description: 'Bạn đang khôi phục mật khẩu của <?= $user->hoTen ?>.',
-                                                            confirmUrl: 'index.php?page=users_xuly_reset&id=<?= $user->idNguoiDung ?>',
-                                                            btnClass: 'bg-blue-600 hover:bg-blue-700'
-                                                        })"
-                                                        class="text-gray-400 hover:text-blue-600 p-1">
-                                                    <i class="fas fa-key"></i>
-                                                </button>
-                                                <a href="index.php?page=nguoidung_sua&id=<?= $user->idNguoiDung ?>" 
-                                                class="text-gray-400 hover:text-blue-600 p-1">
-                                                    <i class="fas fa-edit"></i>
-                                                </a>
-                                                <button @click="openModal" 
-                                                        onclick="triggerModal({
-                                                            title: 'Xóa người dùng',
-                                                            description: 'Bạn đang xoá người dùng <?= $user->hoTen ?>. Hành động này không thể hoàn tác!',
-                                                            confirmUrl: 'index.php?page=users_xuly_xoa&id=<?= $user->idNguoiDung ?>',
-                                                            btnClass: 'bg-red-600 hover:bg-red-700'
-                                                        })"
-                                                        class="text-gray-400 hover:text-red-600 p-1">
-                                                    <i class="fas fa-trash"></i>
-                                                </button>
-                                            </div>
+                                            </td>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                <?php else: ?>
+                                    <tr>
+                                        <td colspan="5" class="px-4 py-8 text-center text-gray-500 dark:text-gray-400">
+                                            Không có dữ liệu người dùng hợp lệ.
                                         </td>
                                     </tr>
-                                <?php endforeach; ?>
-                            <?php else: ?>
-                                <tr><td colspan="5" class="px-4 py-3 text-center">Không có dữ liệu.</td></tr>
-                            <?php endif; ?>
-                        </tbody>
-                    </table>
+                                <?php endif; ?>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
@@ -197,7 +211,7 @@
                                     <?php foreach ($danhSachNhom as $nhom): ?>
                                         <tr class="text-gray-700 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-150">
                                             <td class="px-4 py-3 text-sm">
-                                                <code class="px-2 py-1 font-mono text-xs bg-gray-100 rounded dark:bg-gray-700 text-blue-600 dark:text-blue-400">
+                                                <code class="px-2 py-1 font-mono text-xs bg-gray-100 rounded dark:bg-gray-700 text-red-600 dark:text-red-400">
                                                     <?= $nhom->maNhom ?>
                                                 </code>
                                             </td>
@@ -263,7 +277,7 @@
                                 <?php foreach ($danhSachQuyen as $quyen): ?>
                                     <tr class="text-gray-700 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-150">
                                         <td class="px-4 py-3 text-sm">
-                                            <code class="px-2 py-1 font-mono text-xs bg-gray-100 rounded dark:bg-gray-700 text-blue-600 dark:text-blue-400">
+                                            <code class="px-2 py-1 font-mono text-xs bg-gray-100 rounded dark:bg-gray-700 text-red-600 dark:text-red-400">
                                                 <?= $quyen->maQuyen ?>
                                             </code>
                                         </td>
@@ -287,7 +301,7 @@
                                                         confirmUrl: 'index.php?page=xuly_quyen_xoa&id=<?= $quyen->idQuyen ?>',
                                                         btnClass: 'bg-red-600 hover:bg-red-700'
                                                     })"
-                                                    class="text-gray-400 hover:text-blue-600 transition-colors duration-150">
+                                                    class="text-gray-400 hover:text-red-600 transition-colors duration-150">
                                                 <i class="fas fa-trash"></i>
                                             </button>
                                         </td>
@@ -327,10 +341,10 @@
     >
         <div class="mt-4 mb-6">
             <p class="mb-2 text-lg font-semibold text-gray-700 dark:text-gray-300">
-                Xác nhận xóa nhóm: <span id="delete-group-display-name" class="text-blue-600"></span>
+                Xác nhận xóa nhóm: <span id="delete-group-display-name" class="text-red-600"></span>
             </p>
             <div class="text-sm text-gray-700 dark:text-gray-400 space-y-3">
-                <div class="p-3 bg-amber-50 dark:bg-amber-900/20 text-amber-700 dark:text-amber-400 rounded-lg border border-amber-100 dark:border-amber-800">
+                <div class="p-3 bg-red-50 dark:bg-red-900/20 text-red-700 dark:text-red-400 rounded-lg border border-red-100 dark:border-red-800">
                     <i class="fas fa-exclamation-triangle mr-2"></i>
                     <b>Cảnh báo:</b> Hành động này sẽ xóa toàn bộ thành viên trong nhóm. Di chuyển người dùng sang nhóm mới (nếu có) để xóa an toàn.
                 </div>
@@ -341,7 +355,7 @@
                        id="delete-confirm-input" 
                        placeholder="Nhập mã nhóm..."
                        autocomplete="off"
-                       class="block w-full px-4 py-2 text-sm border border-gray-300 rounded-lg focus:border-blue-400 focus:outline-none focus:shadow-outline-blue dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300">
+                       class="block w-full px-4 py-2 text-sm border border-gray-300 rounded-lg focus:border-red-400 focus:outline-none focus:shadow-outline-red dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300">
                 
                 <input type="hidden" id="delete-group-id">
                 <input type="hidden" id="delete-group-expected-name">
@@ -441,7 +455,7 @@
 
         const input = document.getElementById('delete-confirm-input');
         input.value = '';
-        input.classList.remove('border-blue-600', 'bg-blue-50');
+        input.classList.remove('border-red-600', 'bg-red-50');
 
         window.dispatchEvent(new CustomEvent('open-delete-modal'));
     }
@@ -455,26 +469,142 @@
             window.location.href = `index.php?page=nhom_xuly_xoa&id=${groupId}`;
         } else {
             const inputEl = document.getElementById('delete-confirm-input');
-            inputEl.classList.add('border-blue-600', 'bg-blue-50');
+            inputEl.classList.add('border-red-600', 'bg-red-50');
             inputEl.focus();
             alert('Mã nhóm nhập vào không chính xác. Vui lòng kiểm tra lại!');
         }
     }
+
+    // Tìm nút lọc một lần duy nhất
+    const filterBtn = document.querySelector('button:has(.fa-filter)');
+
+    if (filterBtn) {
+        // CHỈ CẦN 1 LẦN addEventListener
+        filterBtn.addEventListener('click', function() {
+            // 1. Lưu lại nội dung gốc (Lọc + Icon phễu)
+            const originalContent = this.innerHTML;
+            const btn = this; // Gán vào biến btn để đảm bảo scope trong Promise
+
+            // 2. Lấy giá trị
+            const keyword = document.getElementById('searchInput').value.trim();
+            const roleId = document.getElementById('filterRole').value;
+
+            // 3. Hiệu ứng LOADING
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> <span>Đang lọc...</span>';
+            btn.disabled = true;
+            btn.classList.add('opacity-75', 'cursor-not-allowed');
+
+            // 4. Gửi yêu cầu
+            fetch(`index.php?page=users_search&ajax=1&keyword=${encodeURIComponent(keyword)}&role=${roleId}`)
+                .then(res => res.json())
+                .then(data => {
+                    const tbody = document.querySelector('tbody');
+                    tbody.innerHTML = ''; 
+
+                    if (data.length === 0) {
+                        tbody.innerHTML = '<tr><td colspan="5" class="px-4 py-8 text-center text-gray-500">Không tìm thấy kết quả nào.</td></tr>';
+                        return;
+                    }
+
+                    data.forEach(user => {
+                        renderUserRow(tbody, user); 
+                    });
+                })
+                .catch(err => {
+                    console.error("Lỗi AJAX:", err);
+                })
+                .finally(() => {
+                    // 5. HOÀN TÁC: Đưa nút về trạng thái ban đầu
+                    btn.innerHTML = originalContent;
+                    btn.disabled = false;
+                    btn.classList.remove('opacity-75', 'cursor-not-allowed');
+                });
+        });
+    }
+
+    function renderUserRow(tbody, user) {
+        const row = `
+            <tr class="text-gray-700 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-150">
+                <td class="px-4 py-3">
+                    <div class="flex items-center text-sm">
+                        <div class="relative hidden w-8 h-8 mr-3 rounded-full md:block flex-shrink-0">
+                            <div class="flex items-center justify-center w-full h-full rounded-full bg-red-100 text-red-600 dark:bg-red-900 dark:text-red-200 font-bold text-xs">
+                                ${(user.hoTen || 'U').charAt(0).toUpperCase()}
+                            </div>
+                        </div>
+                        <div>
+                            <p class="font-semibold">${user.hoTen}</p>
+                            <p class="text-xs text-gray-600 dark:text-gray-400">${user.maNguoiDung}</p>
+                        </div>
+                    </div>
+                </td>
+                <td class="px-4 py-3 text-sm">
+                    <code class="px-2 py-1 font-mono text-xs bg-gray-100 rounded dark:bg-gray-700 text-gray-600 dark:text-gray-300">
+                        ${user.tenDangNhap}
+                    </code>
+                </td>
+                <td class="px-4 py-3 text-sm">
+                    <span class="px-2 py-1 font-semibold leading-tight text-red-700 bg-red-100 rounded-full dark:bg-red-700 dark:text-red-100 text-xs">
+                        ${user.role_name || user.tenNhom}
+                    </span>
+                </td>
+                <td class="px-4 py-3 text-xs">
+                    <span class="px-2 py-1 font-medium leading-tight text-blue-700 bg-blue-50 border border-blue-100 rounded-full dark:bg-gray-700 dark:text-blue-400 dark:border-blue-900">
+                        ${(user.permissions || []).length} quyền
+                    </span>
+                </td>
+                <td class="px-4 py-3 text-sm text-right">
+                                                <div class="flex justify-end items-center space-x-1">
+                                                    
+                                                    <button @click="openModal" 
+                                                            onclick="triggerModal({
+                                                                title: 'Khôi phục mật khẩu',
+                                                                description: 'Bạn đang khôi phục mật khẩu của <?= $user->hoTen ?>.',
+                                                                confirmUrl: 'index.php?page=users_xuly_reset&id=<?= $user->idNguoiDung ?>',
+                                                                btnClass: 'bg-red-600 hover:bg-red-700'
+                                                            })"
+                                                            class="p-1.5 text-gray-400 hover:text-red-600 transition-colors duration-150 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700"
+                                                            title="Reset mật khẩu">
+                                                        <i class="fas fa-key w-4 h-4"></i>
+                                                    </button>
+
+                                                    <a href="index.php?page=nguoidung_sua&id=<?= $user->idNguoiDung ?>" 
+                                                    class="inline-flex p-1.5 text-gray-400 hover:text-blue-600 transition-colors duration-150 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700"
+                                                    title="Chỉnh sửa">
+                                                        <i class="fas fa-edit w-4 h-4"></i>
+                                                    </a>
+                                                    
+                                                    <button @click="openModal" 
+                                                            onclick="triggerModal({
+                                                                title: 'Xóa người dùng',
+                                                                description: 'Bạn đang xóa <?= $user->hoTen ?>. Hành động này không thể hoàn tác!',
+                                                                confirmUrl: 'index.php?page=users_xuly_xoa&id=<?= $user->idNguoiDung ?>',
+                                                                btnClass: 'bg-red-600 hover:bg-red-700'
+                                                            })"
+                                                            class="p-1.5 text-gray-400 hover:text-red-600 transition-colors duration-150 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700"
+                                                            title="Xóa người dùng">
+                                                        <i class="fas fa-trash w-4 h-4"></i>
+                                                    </button>
+                                                </div>
+                                            </td>
+            </tr>`;
+        tbody.insertAdjacentHTML('beforeend', row);
+    }
 </script>
 
 <style>
+    /* Style cho tabs */
     [data-bs-toggle="tab"] {
         color: #6b7280;
         border-bottom: 2px solid transparent;
     }
     [data-bs-toggle="tab"].active {
-        color: #2563eb; 
-        border-bottom: 3px solid #2563eb;
-        font-weight: 600;
+        color: #2647dc;
+        border-bottom-color: #2647dc;
     }
     .dark [data-bs-toggle="tab"].active {
-        color: #60a5fa;
-        border-bottom-color: #60a5fa;
+        color: #7f71f8;
+        border-bottom-color: #7f71f8;
     }
     [data-bs-toggle="tab"]:hover {
         color: #4b5563;
@@ -485,6 +615,7 @@
         border-bottom-color: #4b5563;
     }
     
+    /* Switch toggle style */
     .peer:checked ~ div:last-child {
         transform: translateX(100%);
     }

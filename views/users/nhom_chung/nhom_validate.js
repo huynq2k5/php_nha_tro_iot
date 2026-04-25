@@ -1,152 +1,135 @@
-function switchTab(tab) {
-    document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
-    document.getElementById(tab + '-tab-content').classList.remove('hidden');
-    
-    document.querySelectorAll('[id$="-tab"]').forEach(el => {
-        el.classList.remove('text-red-600', 'border-red-600', 'dark:text-red-500', 'dark:border-red-500');
-        el.classList.add('border-transparent', 'hover:text-gray-600', 'hover:border-gray-300');
-    });
-    
-    const activeTab = document.getElementById(tab + '-tab');
-    activeTab.classList.remove('border-transparent');
-    activeTab.classList.add('text-red-600', 'border-red-600');
-}
-
-function updateModuleCheckbox(module) {
-    const checkboxes = document.querySelectorAll(`.perm-checkbox[data-module="${module}"]`);
-    const moduleCheckbox = document.querySelector(`.module-checkbox[data-module="${module}"]`);
-    const checkedCount = Array.from(checkboxes).filter(cb => cb.checked).length;
-    
-    if (moduleCheckbox) {
-        moduleCheckbox.checked = checkedCount === checkboxes.length;
-        moduleCheckbox.indeterminate = checkedCount > 0 && checkedCount < checkboxes.length;
-    }
-}
-
-function toggleModule(module, checked) {
-    document.querySelectorAll(`.perm-checkbox[data-module="${module}"]`).forEach(cb => cb.checked = checked);
-}
-
-function checkAllPermissions() {
-    document.querySelectorAll('.perm-checkbox, .module-checkbox').forEach(cb => {
-        cb.checked = true;
-        cb.indeterminate = false;
-    });
-}
-
-function uncheckAllPermissions() {
-    document.querySelectorAll('.perm-checkbox, .module-checkbox').forEach(cb => {
-        cb.checked = false;
-        cb.indeterminate = false;
-    });
-}
-
-function updatePreview() {
-    const nameInput = document.getElementById('tenNhom');
-    const previewText = document.getElementById('previewText');
-    const badge = document.getElementById('badgePreview');
-    if (!nameInput || !previewText || !badge) return;
-
-    previewText.textContent = nameInput.value.trim() || "Tên nhóm...";
-    const color = document.querySelector('input[name="badge_color"]:checked')?.value || 'blue';
-    
-    badge.className = `inline-flex items-center px-3 py-2 text-sm font-semibold rounded-full shadow-sm transition-all duration-300 border bg-${color}-100 text-${color}-700 border-${color}-200 dark:bg-${color}-900 dark:text-${color}-300 dark:border-${color}-800`;
-}
-
-function validateGroupCode() {
+document.addEventListener('DOMContentLoaded', () => {
+    const form = document.getElementById('mainForm');
+    const submitBtn = form ? form.querySelector('button[type="submit"]') : null;
     const groupCode = document.getElementById('maNhom');
-    const errorSpan = document.getElementById('maNhom_error');
-    if (!groupCode || groupCode.readOnly) return true;
+    const groupName = document.getElementById('tenNhom');
+    const groupDesc = document.getElementById('moTa');
 
-    const value = groupCode.value.trim();
-    const regex = /^[A-Z0-9_]+$/;
+    let initialValues = {};
 
-    if (!value) {
-        showError(groupCode, errorSpan, 'Mã nhóm không được để trống');
-        return false;
-    } else if (value.includes(' ')) {
-        showError(groupCode, errorSpan, 'Mã nhóm không được chứa dấu cách');
-        return false;
-    } else if (!regex.test(value)) {
-        showError(groupCode, errorSpan, 'Chỉ dùng chữ hoa, số và gạch dưới');
-        return false;
-    } else if (value.length < 3) {
-        showError(groupCode, errorSpan, 'Mã nhóm phải có ít nhất 3 ký tự');
-        return false;
-    } else {
+    function getPermissionsState() {
+        const checkedPerms = Array.from(document.querySelectorAll('.perm-checkbox:checked')).map(cb => cb.value);
+        const checkedNewMembers = Array.from(document.querySelectorAll('input[name="new_members[]"]:checked')).map(cb => cb.value);
+        return JSON.stringify({ perms: checkedPerms, members: checkedNewMembers });
+    }
+
+    function captureInitialState() {
+        initialValues = {
+            ma: groupCode ? groupCode.value : '',
+            ten: groupName ? groupName.value : '',
+            mota: groupDesc ? groupDesc.value : '',
+            complex: getPermissionsState()
+        };
+        checkStatus();
+    }
+
+    function validateGroupCode() {
+        const errorSpan = document.getElementById('maNhom_error');
+        if (!groupCode || groupCode.readOnly || groupCode.type === 'hidden') return true;
+
+        const value = groupCode.value.trim();
+        const regex = /^[A-Z0-9_]+$/;
+
+        if (!value) return showError(groupCode, errorSpan, 'Mã nhóm không được để trống');
+        if (value.includes(' ')) return showError(groupCode, errorSpan, 'Mã nhóm không được chứa dấu cách');
+        if (!regex.test(value)) return showError(groupCode, errorSpan, 'Chỉ dùng chữ hoa, số và gạch dưới');
+        if (value.length < 3) return showError(groupCode, errorSpan, 'Mã nhóm phải có ít nhất 3 ký tự');
+        
         showSuccess(groupCode, errorSpan);
         return true;
     }
-}
 
-function validateGroupName() {
-    const groupName = document.getElementById('tenNhom');
-    const errorSpan = document.getElementById('tenNhom_error');
-    if (!groupName) return true;
+    function validateGroupName() {
+        const errorSpan = document.getElementById('tenNhom_error');
+        if (!groupName) return true;
+        const value = groupName.value.trim();
 
-    const value = groupName.value.trim();
-
-    if (!value) {
-        showError(groupName, errorSpan, 'Tên nhóm không được để trống');
-        return false;
-    } else if (value.length < 3) {
-        showError(groupName, errorSpan, 'Tên nhóm phải có ít nhất 3 ký tự');
-        return false;
-    } else {
+        if (!value) return showError(groupName, errorSpan, 'Tên nhóm không được để trống');
+        if (value.length < 3) return showError(groupName, errorSpan, 'Tên nhóm phải có ít nhất 3 ký tự');
+        
         showSuccess(groupName, errorSpan);
         return true;
     }
-}
 
-function showError(input, errorEl, message) {
-    input.classList.add('border-red-600');
-    input.classList.remove('border-green-600');
-    if (errorEl) {
-        errorEl.classList.remove('hidden');
-        errorEl.textContent = message;
+    function showError(input, errorEl, message) {
+        input.classList.add('border-red-600');
+        input.classList.remove('border-green-600');
+        if (errorEl) {
+            errorEl.classList.remove('hidden');
+            errorEl.textContent = message;
+        }
+        return false;
     }
-}
 
-function showSuccess(input, errorEl) {
-    input.classList.remove('border-red-600');
-    input.classList.add('border-green-600');
-    if (errorEl) errorEl.classList.add('hidden');
-}
+    function showSuccess(input, errorEl) {
+        input.classList.remove('border-red-600');
+        input.classList.add('border-green-600');
+        if (errorEl) errorEl.classList.add('hidden');
+        return true;
+    }
 
-document.addEventListener('DOMContentLoaded', () => {
-    updatePreview();
-    document.querySelectorAll('.module-checkbox').forEach(cb => updateModuleCheckbox(cb.dataset.module));
+    function checkStatus() {
+        const hasChanged = 
+            (groupCode && groupCode.value !== initialValues.ma) ||
+            (groupName && groupName.value !== initialValues.ten) ||
+            (groupDesc && groupDesc.value !== initialValues.mota) ||
+            (getPermissionsState() !== initialValues.complex);
 
-    const groupCode = document.getElementById('maNhom');
-    const groupName = document.getElementById('tenNhom');
-    const form = document.getElementById('mainForm');
+        const isValid = validateGroupCode() && validateGroupName();
+
+        if (submitBtn) {
+            if (hasChanged && isValid) {
+                submitBtn.disabled = false;
+                submitBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+            } else {
+                submitBtn.disabled = true;
+                submitBtn.classList.add('opacity-50', 'cursor-not-allowed');
+            }
+        }
+    }
+
+    function updatePreview() {
+        const previewText = document.getElementById('previewText');
+        const badge = document.getElementById('badgePreview');
+        if (!groupName || !previewText || !badge) return;
+
+        previewText.textContent = groupName.value.trim() || "Tên nhóm...";
+    }
+
+    form.addEventListener('input', checkStatus);
+    form.addEventListener('change', checkStatus);
 
     if (groupCode) {
         groupCode.addEventListener('input', function() {
             this.value = this.value.toUpperCase();
-            validateGroupCode();
         });
     }
 
     if (groupName) {
-        groupName.addEventListener('input', () => {
-            validateGroupName();
-            updatePreview();
-        });
+        groupName.addEventListener('input', updatePreview);
     }
 
-    if (form) {
-        form.addEventListener('submit', function(e) {
-            const isCodeValid = validateGroupCode();
-            const isNameValid = validateGroupName();
+    const originalCheckAll = window.checkAllPermissions;
+    window.checkAllPermissions = function() {
+        if (originalCheckAll) originalCheckAll();
+        checkStatus();
+    };
 
-            if (!isCodeValid || !isNameValid) {
-                e.preventDefault();
-                switchTab('info');
-                if (!isCodeValid && groupCode) groupCode.focus();
-                else if (!isNameValid && groupName) groupName.focus();
-                alert('Vui lòng kiểm tra lại thông tin bị lỗi!');
-            }
-        });
-    }
+    const originalUncheckAll = window.uncheckAllPermissions;
+    window.uncheckAllPermissions = function() {
+        if (originalUncheckAll) originalUncheckAll();
+        checkStatus();
+    };
+
+    const originalToggleModule = window.toggleModule;
+    window.toggleModule = function(m, c) {
+        if (originalToggleModule) originalToggleModule(m, c);
+        checkStatus();
+    };
+
+    captureInitialState();
+
+    form.addEventListener('submit', (e) => {
+        if (submitBtn.disabled) e.preventDefault();
+    });
 });

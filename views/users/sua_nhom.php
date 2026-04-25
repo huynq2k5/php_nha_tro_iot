@@ -68,7 +68,7 @@ $groupId = $group->idNhom;
                         <?php foreach ($tv as $member): ?>
                         <div class="flex items-center justify-between p-2 bg-gray-50 rounded-lg dark:bg-gray-700">
                             <div class="flex items-center">
-                                <div class="w-8 h-8 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center font-bold mr-3">
+                                <div class="w-8 h-8 rounded-full bg-red-100 text-red-600 flex items-center justify-center font-bold mr-3">
                                     <?= strtoupper(substr($member->hoTen, 0, 1)) ?>
                                 </div>
                                 <div>
@@ -101,7 +101,7 @@ $groupId = $group->idNhom;
                     <?php foreach ($user as $user): ?>
                     <label class="flex items-center p-2 bg-gray-50 rounded-lg cursor-pointer hover:bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 transition-colors">
                         <input type="checkbox" name="new_members[]" value="<?= $user->idNguoiDung ?>" 
-                            class="w-5 h-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500 mr-3">
+                            class="w-5 h-5 text-red-600 border-gray-300 rounded focus:ring-red-500 mr-3">
                         <div>
                             <p class="text-sm font-medium text-gray-800 dark:text-gray-200"><?= $user->hoTen ?></p>
                             <p class="text-xs text-gray-500 dark:text-gray-400"><?= $user->tenNhom ?></p>
@@ -115,7 +115,7 @@ $groupId = $group->idNhom;
 
     <div class="flex justify-end gap-3 mt-8 pt-6 border-t border-gray-200 dark:border-gray-700">
         <button type="submit" 
-                class="px-5 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-blue-600 border border-transparent rounded-lg hover:bg-blue-700 focus:outline-none focus:shadow-outline-blue shadow-md">
+                class="px-5 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-blue-600 border border-transparent rounded-lg hover:bg-blue-700 focus:outline-none focus:shadow-outline-red shadow-md">
             <i class="fas fa-save mr-2"></i> Lưu tất cả thay đổi
         </button>
     </div>
@@ -156,7 +156,7 @@ $groupId = $group->idNhom;
                     Chọn nhóm mới cho thành viên <b id="display-transfer-name" class="text-blue-600"></b>:
                 </p>
                 
-                <div class="relative text-gray-500 focus-within:text-purple-600 dark:focus-within:text-purple-400">
+                <div class="relative text-gray-500 focus-within:text-purple-600 dark:focus-within:text-blue-400">
                     <select id="transfer-group-select" 
                             class="block w-full pl-3 pr-10 py-2.5 text-sm border border-gray-300 rounded-lg focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300 form-select">
                         <?php if (!empty($nhomKhac)): ?>
@@ -179,7 +179,7 @@ $groupId = $group->idNhom;
                 Hủy bỏ
             </button>
             <button onclick="executeTransfer()" 
-                    class="w-full px-5 py-3 text-sm text-center text-white bg-purple-600 rounded-lg sm:w-auto">
+                    class="w-full px-5 py-3 text-sm text-center text-white bg-blue-600 rounded-lg sm:w-auto">
                 Xác nhận chuyển
             </button>
         </footer>

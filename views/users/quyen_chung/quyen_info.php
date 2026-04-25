@@ -11,7 +11,7 @@
             
             <div class="space-y-4">
                 <label class="block text-sm">
-                    <span class="text-gray-700 dark:text-gray-400 font-medium">Mã quyền <span class="text-blue-600">*</span></span>
+                    <span class="text-gray-700 dark:text-gray-400 font-medium">Mã quyền <span class="text-red-600">*</span></span>
                     <div class="relative mt-1">
                         <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                             <i class="fas fa-code text-gray-400"></i>
@@ -26,14 +26,14 @@
                             <input type="text" 
                                    id="permissionKey"
                                    name="maQuyen" 
-                                   class="block w-full pl-10 pr-3 text-sm dark:bg-gray-700 dark:text-gray-300 form-input focus:border-blue-400 focus:shadow-outline-blue font-mono" 
-                                   placeholder="module.action" requiblue>
+                                   class="block w-full pl-10 pr-3 text-sm dark:bg-gray-700 dark:text-gray-300 form-input focus:border-red-400 focus:shadow-outline-red font-mono" 
+                                   placeholder="module.action" required>
                         <?php endif; ?>
                     </div>
                     <?php if (isset($isEdit) && $isEdit === true): ?>
                         <span class="text-xs text-gray-500 mt-1"><i class="fas fa-lock mr-1"></i> Mã quyền không thể thay đổi sau khi tạo</span>
                     <?php else: ?>
-                        <span class="text-xs text-blue-600 hidden mt-1" id="permissionKey_error"></span>
+                        <span class="text-xs text-red-600 hidden mt-1" id="permissionKey_error"></span>
                         <span class="text-xs text-gray-500 mt-1" id="permissionKey_helper">
                             <i class="fas fa-info-circle mr-1"></i> Key dùng để check: <code class="bg-gray-100 dark:bg-gray-700 px-1 rounded">device.create</code>
                         </span>
@@ -41,14 +41,14 @@
                 </label>
 
                 <label class="block text-sm">
-                    <span class="text-gray-700 dark:text-gray-400 font-medium">Tên hiển thị <span class="text-blue-600">*</span></span>
+                    <span class="text-gray-700 dark:text-gray-400 font-medium">Tên hiển thị <span class="text-red-600">*</span></span>
                     <input type="text" 
                            id="permissionName"
                            name="tenQuyen" 
                            value="<?= (isset($isEdit) && $isEdit === true) ? $quyen->tenQuyen : '' ?>"
-                           class="block w-full mt-1 text-sm dark:bg-gray-700 dark:text-gray-300 form-input focus:border-blue-400 focus:shadow-outline-blue" 
-                           placeholder="VD: Thêm thiết bị mới" requiblue>
-                    <span class="text-xs text-blue-600 hidden mt-1" id="permissionName_error"></span>
+                           class="block w-full mt-1 text-sm dark:bg-gray-700 dark:text-gray-300 form-input focus:border-red-400 focus:shadow-outline-red" 
+                           placeholder="VD: Thêm thiết bị mới" required>
+                    <span class="text-xs text-red-600 hidden mt-1" id="permissionName_error"></span>
                 </label>
             </div>
         </div>

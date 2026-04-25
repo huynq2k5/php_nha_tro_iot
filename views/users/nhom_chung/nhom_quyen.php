@@ -6,7 +6,7 @@
                     <th class="px-4 py-3 w-12 text-center">
                         <label class="flex items-center justify-center cursor-pointer">
                             <input type="checkbox" onclick="this.checked ? checkAllPermissions() : uncheckAllPermissions()" 
-                                   class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
+                                   class="w-4 h-4 text-red-600 border-gray-300 rounded focus:ring-red-500">
                         </label>
                     </th>
                     <th class="px-4 py-3">Mã quyền hạn</th>
@@ -17,12 +17,12 @@
             <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
                 <?php if (!empty($quyen)): ?>
                     <?php foreach ($quyen as $item): ?>
-                        <tr class="text-gray-700 dark:text-gray-400 hover:bg-blue-50 dark:hover:bg-gray-700 transition-colors">
+                        <tr class="text-gray-700 dark:text-gray-400 hover:bg-red-50 dark:hover:bg-gray-700 transition-colors">
                             <td class="px-4 py-3 text-center">
                                 <i class="fas fa-shield-alt text-gray-300 text-xs"></i>
                             </td>
                             <td class="px-4 py-3 text-sm">
-                                <span class="px-2 py-1 font-mono text-xs font-bold bg-blue-50 text-blue-600 rounded border border-blue-100 dark:bg-blue-900/20 dark:text-blue-400 dark:border-blue-800">
+                                <span class="px-2 py-1 font-mono text-xs font-bold bg-red-50 text-red-600 rounded border border-red-100 dark:bg-red-900/20 dark:text-red-400 dark:border-red-800">
                                     <?= htmlspecialchars($item->maQuyen) ?>
                                 </span>
                             </td>
@@ -32,7 +32,7 @@
                             <td class="px-4 py-3 text-center">
                                 <label class="inline-flex items-center justify-center cursor-pointer">
                                     <input type="checkbox" name="permissions[]" value="<?= $item->idQuyen ?>" 
-                                           class="perm-checkbox w-5 h-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500" 
+                                           class="perm-checkbox w-5 h-5 text-red-600 border-gray-300 rounded focus:ring-red-500" 
                                            <?= (isset($quyenNhom) && in_array($item->idQuyen, $quyenNhom)) ? 'checked' : '' ?>>
                                 </label>
                             </td>

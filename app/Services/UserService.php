@@ -31,12 +31,37 @@ class UserService{
         return $user;
     }
 
+    public function doiMatKhau($id, $matKhauCu, $matKhauMoi) {
+        $user = $this->userRepo->timUserTheoId($id);
+        
+        if (password_verify($matKhauCu, $user->matKhau)) {
+            $hashMoi = password_hash($matKhauMoi, PASSWORD_DEFAULT);
+            return $this->userRepo->resetMatKhau($id, $hashMoi);
+        }
+        
+        return false; 
+    }
+
     public function getUserByIdRole($id) {
         return $this->userRepo->timUserTheoNhom($id);
     }
 
     public function getUserCoSan($idNhom) {
         return $this->userRepo->layNguoiDungNgoaiNhom($idNhom);
+    }
+
+    public function timKiemNguoiDung($keyword, $idNhom) {
+        $users = $this->userRepo->searchUsers($keyword, $idNhom);
+
+        foreach ($users as $user) {
+            if (isset($user->idNhom)) {
+                $user->permissions = $this->userRepo->getPermissions($user->idNhom);
+            } else {
+                $user->permissions = [];
+            }
+        }
+
+        return $users;
     }
 
     public function themUser($data) {

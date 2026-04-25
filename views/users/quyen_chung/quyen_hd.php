@@ -15,8 +15,8 @@
                     <div class="text-xs text-gray-500">Tài nguyên + Hành động</div>
                 </div>
             </div>
-            <div class="flex items-start text-blue-700">
-                <span class="inline-flex items-center px-2 py-1 text-xs font-semibold text-blue-700 bg-blue-100 rounded-full mr-2 mt-0.5">Sai</span>
+            <div class="flex items-start text-red-700">
+                <span class="inline-flex items-center px-2 py-1 text-xs font-semibold text-red-700 bg-red-100 rounded-full mr-2 mt-0.5">Sai</span>
                 <div>
                     <div class="font-mono font-semibold text-sm">ThemNguoiDung</div>
                     <div class="text-xs text-gray-500">Không dùng Tiếng Việt/CamelCase</div>

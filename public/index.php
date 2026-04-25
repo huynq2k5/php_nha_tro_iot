@@ -37,6 +37,15 @@ if ($msg) {
         case 'res_thatbai':
             $alert = ['type' => 'error', 'title' => 'Khôi phục thất bại', 'text' => 'Lỗi khi thực hiện khôi phục mật khẩu.'];
             break;
+        case 'pass_ko_khop':
+            $alert = ['type' => 'error', 'title' => 'Mật khẩu mới không khớp', 'text' => 'Mật khẩu mới và xác nhận không khớp.'];
+            break;
+        case 'pass_sai':
+            $alert = ['type' => 'error', 'title' => 'Sai mật khẩu', 'text' => 'Sai mật khẩu cũ. Vui lòng nhập lại.'];
+            break;
+        case 'duplicate_code':
+            $alert = ['type' => 'error', 'title' => 'Trùng mã số', 'text' => 'Mã số đã được sử dụng.'];
+            break;
     }
 }
 
@@ -100,6 +109,21 @@ switch ($page) {
         } else {
             $page = '403';
         }
+        break;
+    
+    case 'api_search_features':
+        $controller = new \App\Controllers\NguoiDungController();
+        $controller->apiTimKiemChucNang();
+        break;
+
+    case 'profile_update_info':
+        $userController = new \App\Controllers\NguoiDungController();
+        $userController->webCapNhatThongTinCaNhan();
+        break;
+
+    case 'profile_change_password':
+        $userController = new \App\Controllers\NguoiDungController();
+        $userController->webDoiMatKhauCaNhan();
         break;
 
     // Các tab thiết bị
@@ -180,6 +204,10 @@ switch ($page) {
         } else {
             $page = '403';
         }
+        break;
+    case 'users_search':
+        $controller = new \App\Controllers\NguoiDungController();
+        $controller->apiTimKiem();
         break;
     case 'nguoidung_them':
         if (hasPermission('nguoidung.view')) {
