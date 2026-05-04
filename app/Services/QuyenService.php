@@ -26,6 +26,9 @@ class QuyenService{
     }
 
     public function themQuyen($data) {        
+        if ($this->quyenRepo->kiemTraTrungMa($data['maQuyen'])) {
+            return "ERROR_DUPLICATE_CODE";
+        }
         return $this->quyenRepo->insertQuyen($data);
     }
 

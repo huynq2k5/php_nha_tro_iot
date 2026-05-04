@@ -134,7 +134,8 @@ class NguoiDungController{
         exit;
     }
 
-    public function webThemNguoiDung() {
+    public function webThemNguoiDung()
+    {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $data = [
                 'maNguoiDung' => $_POST['maNguoiDung'] ?? null,
@@ -146,7 +147,18 @@ class NguoiDungController{
 
             $kq = $this->userService->themUser($data);
 
-            $_SESSION['msg'] = $kq ? 'add_success' : 'add_error';
+            if ($kq === "ERROR_DUPLICATE_CODE") {
+                $_SESSION['msg'] = 'duplicate_code';
+                header('Location: index.php?page=nguoidung_them');
+                exit;
+            }
+
+            if ($kq) {
+                $_SESSION['msg'] = 'add_success';
+            } else {
+                $_SESSION['msg'] = 'add_error';
+            }
+
             header('Location: index.php?page=users');
             exit;
         }
@@ -302,7 +314,8 @@ class NguoiDungController{
         }
     }
 
-    public function webThemNhom() {
+    public function webThemNhom()
+    {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $data = [
                 'maNhom' => $_POST['maNhom'] ?? null,
@@ -311,6 +324,12 @@ class NguoiDungController{
             ];
 
             $kq = $this->nhomService->themNhom($data);
+            
+            if ($kq === "ERROR_DUPLICATE_CODE") {
+                $_SESSION['msg'] = 'duplicate_code';
+                header('Location: index.php?page=nhom_them');
+                exit;
+            }
 
             $_SESSION['msg'] = $kq ? 'add_success' : 'add_error';
             header('Location: index.php?page=users&tab=groups');
@@ -318,7 +337,8 @@ class NguoiDungController{
         }
     }
 
-    public function webThemQuyen() {
+    public function webThemQuyen()
+    {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $data = [
                 'maQuyen' => $_POST['maQuyen'] ?? null,
@@ -326,6 +346,12 @@ class NguoiDungController{
             ];
 
             $kq = $this->quyenService->themQuyen($data);
+            
+            if ($kq === "ERROR_DUPLICATE_CODE") {
+                $_SESSION['msg'] = 'duplicate_code';
+                header('Location: index.php?page=quyen_them');
+                exit;
+            }
 
             $_SESSION['msg'] = $kq ? 'add_success' : 'add_error';
             header('Location: index.php?page=users&tab=permissions');

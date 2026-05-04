@@ -43,6 +43,19 @@ class NhomRepository{
         return null;
     }
 
+    public function kiemTraTrungMa($maNhom, $idHienTai = null) {
+        $sql = "SELECT idNhom FROM nhomnguoidung WHERE maNhom = ?";
+        $params = [$maNhom];
+
+        if ($idHienTai) {
+            $sql .= " AND idNhom != ?";
+            $params[] = $idHienTai;
+        }
+
+        $result = $this->db->truyVan($sql, $params);
+        return ($result && $result->num_rows > 0);
+    }
+
     public function insertNhom($data) {
         $sql = "INSERT INTO nhomnguoidung (maNhom, tenNhom, moTa) 
                 VALUES (?, ?, ?)";

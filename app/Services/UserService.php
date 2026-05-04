@@ -31,17 +31,6 @@ class UserService{
         return $user;
     }
 
-    public function doiMatKhau($id, $matKhauCu, $matKhauMoi) {
-        $user = $this->userRepo->timUserTheoId($id);
-        
-        if (password_verify($matKhauCu, $user->matKhau)) {
-            $hashMoi = password_hash($matKhauMoi, PASSWORD_DEFAULT);
-            return $this->userRepo->resetMatKhau($id, $hashMoi);
-        }
-        
-        return false; 
-    }
-
     public function getUserByIdRole($id) {
         return $this->userRepo->timUserTheoNhom($id);
     }
@@ -50,21 +39,15 @@ class UserService{
         return $this->userRepo->layNguoiDungNgoaiNhom($idNhom);
     }
 
-    public function timKiemNguoiDung($keyword, $idNhom) {
-        $users = $this->userRepo->searchUsers($keyword, $idNhom);
-
-        foreach ($users as $user) {
-            if (isset($user->idNhom)) {
-                $user->permissions = $this->userRepo->getPermissions($user->idNhom);
-            } else {
-                $user->permissions = [];
-            }
-        }
-
-        return $users;
+    public function checkDuplicateCode($maNguoiDung, $idHienTai = null) {
+        return $this->userRepo->kiemTraTrungMa($maNguoiDung, $idHienTai);
     }
 
     public function themUser($data) {
+        if ($this->userRepo->kiemTraTrungMa($data['maNguoiDung'])) {
+            return "ERROR_DUPLICATE_CODE"; 
+        }
+
         if (empty($data['matKhau'])) {
             $data['matKhau'] = '12345678';
         }
@@ -90,6 +73,32 @@ class UserService{
     public function chuyenNhomMoi($idUser, $idNhomMoi) {
         if (!$idUser || !$idNhomMoi) return false;
         return $this->userRepo->updateIdNhom($idUser, $idNhomMoi);
+    }
+
+    public function timKiemNguoiDung($keyword, $idNhom) {
+        $users = $this->userRepo->searchUsers($keyword, $idNhom);
+
+        foreach ($users as $user) {
+            if (isset($user->idNhom)) {
+                $user->permissions = $this->userRepo->getPermissions($user->idNhom);
+            } else {
+                $user->permissions = [];
+            }
+        }
+
+        return $users;
+    }
+
+    public function doiMatKhau($id, $matKhauCu, $matKhauMoi) {
+        $user = $this->userRepo->timUserTheoId($id);
+        
+        // Kiểm tra mật khẩu cũ có khớp với Hash trong DB không
+        if (password_verify($matKhauCu, $user->matKhau)) {
+            $hashMoi = password_hash($matKhauMoi, PASSWORD_DEFAULT);
+            return $this->userRepo->resetMatKhau($id, $hashMoi);
+        }
+        
+        return false; // Mật khẩu cũ sai
     }
 }
 ?>

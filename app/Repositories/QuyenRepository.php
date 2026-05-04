@@ -54,6 +54,19 @@ class QuyenRepository {
         return null;
     }
 
+    public function kiemTraTrungMa($maQuyen, $idHienTai = null) {
+        $sql = "SELECT idQuyen FROM quyen WHERE maQuyen = ?";
+        $params = [$maQuyen];
+
+        if ($idHienTai) {
+            $sql .= " AND idQuyen != ?";
+            $params[] = $idHienTai;
+        }
+
+        $kq = $this->db->truyVan($sql, $params);
+        return ($kq && $kq->num_rows > 0);
+    }
+
     public function insertQuyen($data) {
         $sql = "INSERT INTO quyen (maQuyen, tenQuyen) 
                 VALUES (?, ?)";

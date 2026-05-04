@@ -5,10 +5,8 @@ $currentPage = $_GET['page'] ?? 'dashboard';
 <aside class="z-20 hidden w-64 overflow-y-auto bg-white dark:bg-gray-800 md:block flex-shrink-0">
     <div class="py-4 text-gray-500 dark:text-gray-400">
         <a class="ml-6 text-lg font-bold text-gray-800 dark:text-gray-200 flex items-center" href="index.php?page=dashboard">
-            <div class="p-1 bg-blue-600 rounded-lg mr-3">
-                <i class="fas fa-shield-alt text-white text-sm"></i>
-            </div>
-            <span>SafeStay IoT</span>
+            <img src="img/icon_qlnt.png" class="w-8 h-8 mr-3 object-contain" alt="Logo">
+            <span>IoT SafeStay</span>
         </a>
         
         <ul class="mt-6">

@@ -75,29 +75,6 @@ class UserRepository {
         return $user;
     }
 
-    public function searchUsers($keyword = '', $idNhom = '') {
-        $sql = "SELECT u.*, n.tenNhom as role_name 
-                FROM nguoidung u 
-                JOIN nhomnguoidung n ON u.idNhom = n.idNhom 
-                WHERE (u.tenDangNhap LIKE ? OR u.hoTen LIKE ?)";
-        
-        $params = ["%$keyword%", "%$keyword%"];
-
-        if (!empty($idNhom)) {
-            $sql .= " AND u.idNhom = ?";
-            $params[] = $idNhom;
-        }
-
-        $result = $this->db->truyVan($sql, $params);
-        $users = [];
-        if ($result && $result->num_rows > 0) {
-            while ($row = $result->fetch_assoc()) {
-                $users[] = (object)$row;
-            }
-        }
-        return $users;
-    }
-
     public function timUserTheoId($id) {
         $sql = "SELECT u.*, n.tenNhom as role_name 
                 FROM nguoidung u 
@@ -129,6 +106,20 @@ class UserRepository {
             }
         }
         return $users;
+    }
+
+    public function kiemTraTrungMa($maNguoiDung, $idHienTai = null) {
+        $sql = "SELECT idNguoiDung FROM nguoidung WHERE maNguoiDung = ?";
+        $params = [$maNguoiDung];
+
+        if ($idHienTai) {
+            $sql .= " AND idNguoiDung != ?";
+            $params[] = $idHienTai;
+        }
+
+        $result = $this->db->truyVan($sql, $params);
+        
+        return ($result && $result->num_rows > 0);
     }
 
     public function insertNguoiDung($data) {
@@ -189,5 +180,28 @@ class UserRepository {
     public function updateIdNhom($idNguoiDung, $idNhomMoi) {
         $sql = "UPDATE nguoidung SET idNhom = ? WHERE idNguoiDung = ?";
         return $this->db->capNhat($sql, [$idNhomMoi, $idNguoiDung]);
+    }
+
+    public function searchUsers($keyword = '', $idNhom = '') {
+        $sql = "SELECT u.*, n.tenNhom as role_name 
+                FROM nguoidung u 
+                JOIN nhomnguoidung n ON u.idNhom = n.idNhom 
+                WHERE (u.tenDangNhap LIKE ? OR u.hoTen LIKE ?)";
+        
+        $params = ["%$keyword%", "%$keyword%"];
+
+        if (!empty($idNhom)) {
+            $sql .= " AND u.idNhom = ?";
+            $params[] = $idNhom;
+        }
+
+        $result = $this->db->truyVan($sql, $params);
+        $users = [];
+        if ($result && $result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                $users[] = (object)$row;
+            }
+        }
+        return $users;
     }
 }

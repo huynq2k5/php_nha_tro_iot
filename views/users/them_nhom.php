@@ -65,3 +65,34 @@ $allPermissions = [];
 <script>
     <?php include 'nhom_chung/nhom_validate.js'; ?>
 </script>
+<script>
+    function switchTab(tabName) {
+    const infoContent = document.getElementById('info-tab-content');
+    const permissionsContent = document.getElementById('permissions-tab-content');
+    const infoTabBtn = document.getElementById('info-tab');
+    const permissionsTabBtn = document.getElementById('permissions-tab');
+
+    const activeClasses = ['text-red-600', 'border-red-600', 'active-tab'];
+    const inactiveClasses = ['text-gray-600', 'border-transparent'];
+
+    if (tabName === 'info') {
+        infoContent.classList.remove('hidden');
+        permissionsContent.classList.add('hidden');
+
+        infoTabBtn.classList.add(...activeClasses);
+        infoTabBtn.classList.remove(...inactiveClasses);
+        
+        permissionsTabBtn.classList.remove(...activeClasses);
+        permissionsTabBtn.classList.add(...inactiveClasses);
+    } else {
+        permissionsContent.classList.remove('hidden');
+        infoContent.classList.add('hidden');
+
+        permissionsTabBtn.classList.add(...activeClasses);
+        permissionsTabBtn.classList.remove(...inactiveClasses);
+        
+        infoTabBtn.classList.remove(...activeClasses);
+        infoTabBtn.classList.add(...inactiveClasses);
+    }
+}
+</script>

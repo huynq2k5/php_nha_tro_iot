@@ -35,6 +35,9 @@ class NhomService{
     }
 
     public function themNhom($data) {        
+        if ($this->nhomRepo->kiemTraTrungMa($data['maNhom'])) {
+            return "ERROR_DUPLICATE_CODE";
+        }
         return $this->nhomRepo->insertNhom($data);
     }
 
