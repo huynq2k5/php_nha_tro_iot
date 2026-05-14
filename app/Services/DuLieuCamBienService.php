@@ -136,7 +136,7 @@ class DuLieuCamBienService {
 
     public function phanTichChiSo($values, $macdData, $rsiData) {
         $default = [
-            'evaluation' => 'Đang thu thập dữ liệu phân tích...',
+            'evaluation' => 'Đang thu thập dữ liệu...',
             'suggestion' => 'Vui lòng chờ thiết bị cập nhật thêm dữ liệu.',
             'statusClass' => 'text-gray-400',
             'bgClass' => 'bg-gray-500',
@@ -145,7 +145,7 @@ class DuLieuCamBienService {
             'momentum' => '--'
         ];
 
-        if (empty($macdData['macd']) || empty($rsiData) || count($values) < 2) {
+        if (empty($macdData['macd']) || empty($rsiData) || count($values) < 26) {
             return $default;
         }
 
@@ -158,21 +158,26 @@ class DuLieuCamBienService {
         $trend = $isBullish ? "tăng" : "giảm";
         $momentum = abs($lastHist) > 0.1 ? "mạnh" : "yếu";
 
-        if ($lastRSI > 70) {
-            $statusClass = "text-red-600";
-            $bgClass = "bg-red-600";
-            $evaluation = "Chỉ số đang tăng cao đột biến (RSI: " . round($lastRSI) . ").";
-            $suggestion = "Có biến động lớn trong phòng, hãy kiểm tra thiết bị liên quan.";
-        } elseif ($lastRSI < 30) {
-            $statusClass = "text-blue-600";
-            $bgClass = "bg-blue-600";
-            $evaluation = "Chỉ số đang giảm sâu (RSI: " . round($lastRSI) . ").";
-            $suggestion = "Môi trường đang thay đổi nhanh theo chiều hướng giảm.";
+        if ($lastHist > 0 && $lastRSI >= 80) {
+            $statusClass = "text-red-700 font-bold";
+            $bgClass = "bg-red-700";
+            $evaluation = "KHẨN CẤP";
+            $suggestion = "Sự cố rò rỉ hoặc quá nhiệt đang diễn ra mạnh. Ngắt nguồn điện và sơ tán ngay.";
+        } elseif ($isBullish && ($lastRSI >= 70 && $lastRSI < 80)) {
+            $statusClass = "text-orange-600 font-bold";
+            $bgClass = "bg-orange-500";
+            $evaluation = "CẢNH BÁO SỚM";
+            $suggestion = "Nguy cơ sự cố trong tương lai gần. Hãy kiểm tra các van khí và thiết bị nhiệt.";
+        } elseif ($isBullish || $lastRSI > 70) {
+            $statusClass = "text-yellow-600";
+            $bgClass = "bg-yellow-500";
+            $evaluation = "THEO DÕI SÁT SAO";
+            $suggestion = "Phát hiện xu hướng tăng bất thường. Nhân viên kỹ thuật cần lưu ý giám sát.";
         } else {
             $statusClass = "text-green-600";
             $bgClass = "bg-green-600";
-            $evaluation = "Trạng thái ổn định (RSI: " . round($lastRSI) . ").";
-            $suggestion = "Môi trường nhà trọ đang duy trì ở mức bình thường.";
+            $evaluation = "BÌNH THƯỜNG";
+            $suggestion = "Môi trường ổn định, các chỉ số đang trong ngưỡng an toàn.";
         }
 
         return [
@@ -180,9 +185,10 @@ class DuLieuCamBienService {
             'suggestion' => $suggestion,
             'statusClass' => $statusClass,
             'bgClass' => $bgClass,
-            'lastRSI' => round($lastRSI),
+            'lastRSI' => round($lastRSI, 2),
             'trendText' => $trend,
-            'momentum' => $momentum
+            'momentum' => $momentum,
+            'histogram' => $lastHist
         ];
     }
 }

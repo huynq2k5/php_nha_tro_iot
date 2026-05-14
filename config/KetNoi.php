@@ -12,7 +12,7 @@ class KetNoi {
         $this->host = getenv('DB_HOST') ?: '127.0.0.1';
         $this->user = getenv('DB_USER') ?: 'root';
         $this->pass = getenv('DB_PASS') ?: '';
-        $this->dbname = getenv('DB_NAME') ?: 'QLNT';
+        $this->dbname = getenv('DB_NAME') ?: 'qlnt';
         $this->port = getenv('DB_PORT') ?: 3306;
         $this->moKetNoi();
     }
@@ -33,7 +33,7 @@ class KetNoi {
             $this->dbname, 
             $this->port, 
             NULL, 
-            MYSQLI_CLIENT_SSL
+            //MYSQLI_CLIENT_SSL
         );
 
         if (!$resolved) {
